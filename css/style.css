@@ -386,3 +386,10 @@ ol, ul { list-style: none; }
   .js .hero__media img, .js [data-reveal], .js [data-split] .w__i, .js .mast { opacity: 1 !important; transform: none !important; }
   .portrait__frame img { transform: scale(1.02); }
 }
+
+/* ---------- 404 ---------- */
+.nf__main { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.nf__label { color: var(--red); }
+.nf__title { font-size: clamp(4rem, 16vw, 15rem); }
+.nf__back { color: var(--mute); align-self: flex-start; }
+.nf__back:hover { color: var(--paper); }
