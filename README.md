@@ -9,7 +9,7 @@ python3 -m http.server 8080
 ```
 
 - `index.html` — markup
-- `css/style.css` — styles (Archivo variable + IBM Plex Mono, self-hosted in `assets/fonts`)
+- `css/style.css` — styles (Anton + Schibsted Grotesk + DM Mono, self-hosted in `assets/fonts`)
 - `js/main.js` — reveal / parallax (transform + opacity only, disabled under `prefers-reduced-motion`)
 - `assets/img` — avatar, second-account avatar and X header, taken from the original asset pack
 

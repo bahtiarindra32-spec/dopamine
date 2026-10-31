@@ -88,17 +88,13 @@
     const vh = window.innerHeight;
 
     if (!reduce.matches) {
-      if (heroMedia) {
-        const h = heroMedia.offsetHeight;
-        if (y < h + 200) heroMedia.style.transform = `translate3d(0, ${(y * 0.35).toFixed(1)}px, 0)`;
-      }
-      if (drift) {
-        const r = drift.parentElement.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < vh) {
-          const p = (r.top + r.height / 2 - vh / 2) / vh; /* -1..1 around centre */
-          drift.style.transform = `translate3d(0, ${(p * -6).toFixed(2)}%, 0) scale(1.12)`;
-        }
-      }
+      [[heroMedia, 5, ''], [drift, 6, ' scale(1.12)']].forEach(([el, amt, extra]) => {
+        if (!el) return;
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const p = (r.top + r.height / 2 - vh / 2) / vh;
+        el.style.transform = `translate3d(0, ${(p * -amt).toFixed(2)}%, 0)${extra}`;
+      });
     }
 
     if (mast) {
@@ -119,6 +115,20 @@
     onScroll();
   });
   update();
+
+  /* fit footer wordmark to the column */
+  const fitEl = document.querySelector('[data-fit]');
+  const fit = () => {
+    if (!fitEl) return;
+    const box = fitEl.parentElement;
+    const cs = getComputedStyle(box);
+    const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    box.style.fontSize = '';
+    const size = parseFloat(getComputedStyle(box).fontSize);
+    box.style.fontSize = `${(size * avail / fitEl.offsetWidth).toFixed(2)}px`;
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+  window.addEventListener('resize', fit, { passive: true });
 
   /* current section in nav */
   const links = [...document.querySelectorAll('.mast__nav a')];
